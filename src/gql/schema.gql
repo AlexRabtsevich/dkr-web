@@ -1,0 +1,271 @@
+directive @upper on FIELD_DEFINITION
+
+type SuccessModel {
+    success: Boolean!
+}
+
+type GenderModel {
+    uuid: String!
+    name: String!
+}
+
+type AuthenticationModel {
+    accessToken: String!
+    refreshToken: String!
+}
+
+type LogoutModel {
+    success: Boolean!
+}
+
+type UserModel {
+    uuid: ID!
+    firstName: String!
+    lastName: String!
+    birthDate: Date!
+    email: String!
+    gender: GenderModel!
+    status: UserStatus!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+enum UserStatus {
+    Active
+    Blocked
+}
+
+"""Genre"""
+type MovieGenreModel {
+    id: ID!
+    name: String!
+}
+
+"""Movie production company"""
+type MovieProductionCompanyModel {
+    id: Float!
+    name: String!
+    logoPath: String
+    originCountry: String
+}
+
+"""Movie production country"""
+type MovieProductionCountryModel {
+    name: String!
+    iso31661: String!
+}
+
+"""Movie spoken language"""
+type MovieSpokenLanguageModel {
+    name: String!
+    iso6391: String!
+}
+
+"""Movie details"""
+type MovieDetailsModel {
+    posterPath: String
+    adult: Boolean!
+    overview: String
+    releaseDate: String
+    id: ID!
+    originalTitle: String!
+    originalLanguage: String!
+    title: String!
+    backdropPath: String
+    popularity: Float!
+    video: Boolean!
+    voteAverage: Float!
+    voteCount: Float!
+    belongsToCollection: String
+    budget: Float!
+    genres: [MovieGenreModel!]!
+    homepage: String
+    imdbId: String
+    productionCompanies: [MovieProductionCompanyModel!]!
+    productionCountries: [MovieProductionCountryModel!]!
+    revenue: Float!
+    runtime: Float
+    spokenLanguages: [MovieSpokenLanguageModel!]!
+    status: String!
+    tagline: String
+}
+
+"""Movie list"""
+type MovieModel {
+    posterPath: String
+    adult: Boolean!
+    overview: String
+    releaseDate: String
+    id: ID!
+    originalTitle: String!
+    originalLanguage: String!
+    title: String!
+    backdropPath: String
+    popularity: Float!
+    video: Boolean!
+    voteAverage: Float!
+    voteCount: Float!
+    genresId: [Float!]
+}
+
+"""Movies with pagination info"""
+type MoviesResultsModelWithPagination {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [MovieModel!]!
+}
+
+"""Movie`s country filters"""
+type MovieSearchCountryFilterModel {
+    name: String!
+    handle: String!
+}
+
+"""Movie`s language filters"""
+type MovieSearchLanguageFilterModel {
+    name: String!
+    handle: String!
+}
+
+"""Wish list`s movie"""
+type WishListMovieModel {
+    posterPath: String
+    adult: Boolean!
+    overview: String
+    releaseDate: String
+    id: ID!
+    originalTitle: String!
+    originalLanguage: String!
+    title: String!
+    backdropPath: String
+    popularity: Float!
+    video: Boolean!
+    voteAverage: Float!
+    voteCount: Float!
+    belongsToCollection: String
+    budget: Float!
+    genres: [MovieGenreModel!]!
+    homepage: String
+    imdbId: String
+    productionCompanies: [MovieProductionCompanyModel!]!
+    productionCountries: [MovieProductionCountryModel!]!
+    revenue: Float!
+    runtime: Float
+    spokenLanguages: [MovieSpokenLanguageModel!]!
+    status: String!
+    tagline: String
+    uuid: String!
+    createdAt: Date!
+    isWatched: Boolean!
+}
+
+"""Wish list`s movies"""
+type WishListMoviesModel {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [WishListMovieModel!]!
+}
+
+"""Wish list"""
+type WishListModel {
+    uuid: String!
+    userUuid: String!
+    title: String!
+    createdAt: Date!
+    updatedAt: Date!
+    movies(page: Int!): WishListMoviesModel!
+}
+
+"""Wish lists with pagination info"""
+type WishListsResultsModelWithPagination {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [WishListModel!]!
+}
+
+type Query {
+    user: UserModel!
+    gender(uuid: String!): GenderModel!
+    genders: [GenderModel!]!
+    movieGenre(id: Int!): MovieGenreModel!
+    movieGenres: [MovieGenreModel!]!
+    movieDetails(id: Int!): MovieDetailsModel!
+    latestMovie: MovieDetailsModel!
+    popularMovies(page: Int!): MoviesResultsModelWithPagination!
+    upcomingMovies(page: Int!): MoviesResultsModelWithPagination!
+    topRatedMovies(page: Int!): MoviesResultsModelWithPagination!
+    searchMovies(page: Int!, year: Int, language: String, releaseDateGte: String, releaseDateLte: String, runtimeGte: Float, runtimeLte: Float, genreIds: String, region: String, sortBy: MovieSorting): MoviesResultsModelWithPagination!
+    movieLanguageFilters: [MovieSearchLanguageFilterModel!]!
+    movieCountryFilters: [MovieSearchCountryFilterModel!]!
+    wishList(wishListUuid: String!): WishListModel!
+    wishLists(page: Float!): WishListsResultsModelWithPagination!
+}
+
+enum MovieSorting {
+    PopularityAsc
+    PopularityDesc
+    ReleaseDateAsc
+    ReleaseDateDesc
+    RevenueAsc
+    RevenueDesc
+    OriginalTitleAsc
+    OriginalTitleDesc
+    VoteAverageAsc
+    VoteAverageDesc
+}
+
+type Mutation {
+    createUser(crateUserData: CreateUserDto!): Boolean!
+    updateUser(updateUserData: UpdateUserDto!): UserModel!
+    authenticate(authentication: AuthenticationDto!): AuthenticationModel!
+    refreshAuthentication(refreshToken: RefreshAuthenticationDto!): AuthenticationModel!
+    logout: LogoutModel!
+    createWishList(wishListData: CreateWishListDto!): WishListModel!
+    updateWishList(wishListUpdateData: UpdateWishListDto!): WishListModel!
+    deleteWishList(watchlistUuid: String!): SuccessModel!
+    deleteMovieFromWishList(watchlistUuid: String!, watchlistMovieUuid: String!): SuccessModel!
+    addMovieToWishList(addMovieToWatchlistData: AddMovieToWishListDto!): WishListMovieModel!
+}
+
+input CreateUserDto {
+    firstName: String!
+    lastName: String!
+    birthDate: Date!
+    email: String!
+    genderUuid: String!
+    password: String!
+}
+
+input UpdateUserDto {
+    firstName: String
+    lastName: String
+    birthDate: Date
+    genderUuid: String
+}
+
+input AuthenticationDto {
+    email: String!
+    password: String!
+}
+
+input RefreshAuthenticationDto {
+    refreshToken: String!
+}
+
+input CreateWishListDto {
+    title: String!
+}
+
+input UpdateWishListDto {
+    wishListUuid: String!
+    title: String
+}
+
+input AddMovieToWishListDto {
+    watchlistUuid: String!
+    externalMovieId: Float!
+}

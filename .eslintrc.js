@@ -24,6 +24,9 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
+    'no-useless-constructor': 0,
     camelcase: 'error',
     'spaced-comment': 'error',
     quotes: ['error', 'single'],

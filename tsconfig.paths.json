@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@dkr-web/common/*": ["./src/common/*"],
+      "@dkr-web/navigation": ["./src/navigation/index"],
+      "@dkr-web/movie": ["./src/movie/index"],
+      "@dkr-web/wish-list": ["./src/wish-list/index"],
+      "@dkr-web/gql": ["./src/gql/index"],
+      "@dkr-web/layout": ["./src/layout/index"],
+      "@dkr-web/form": ["./src/form/index"],
+      "@dkr-web/authentication": ["./src/authentication/index"],
+      "@dkr-web/ui-kit": ["./src/ui-kit/index"]
+    }
+  }
+}

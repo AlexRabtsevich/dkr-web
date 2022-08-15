@@ -1,0 +1,1 @@
+export { MovieSearchPagination } from './pagination';

@@ -1,0 +1,1 @@
+export { DashboardMoviesCard } from './card';

@@ -1,2 +1,2 @@
-export { useThemeStore } from './store';
+export * from './store';
 export { ThemeProvider } from './provider';

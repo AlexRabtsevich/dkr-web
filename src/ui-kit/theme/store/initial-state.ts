@@ -1,8 +1,7 @@
 import { IThemeState, ThemeHandle } from './types';
 import { getItemFromLocalStorage } from '../../../common/utils';
-
-const THEME_KEY = 'theme';
+import { THEME_HANDLE_KEY } from '../constants';
 
 export const initialThemeState: IThemeState = {
-  themeHandle: (getItemFromLocalStorage(THEME_KEY) as ThemeHandle) || ThemeHandle.Light,
+  themeHandle: (getItemFromLocalStorage(THEME_HANDLE_KEY) as ThemeHandle) || ThemeHandle.Light,
 };

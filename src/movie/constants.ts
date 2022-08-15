@@ -1,0 +1,3 @@
+export const MOVIE_RELEASE_DATE_FORMAT = 'MMMM Do YYYY';
+export const MAX_MOVIE_PAGE_COUNT = 500;
+export const MOVIE_SEARCH_DATE_FORMAT = 'YYYY-MM-DD';
